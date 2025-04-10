@@ -2,19 +2,20 @@
 from socket import socket, AF_INET, SOCK_STREAM
 
 try:
-    # Montagem
-    conexao = socket(AF_INET, SOCK_STREAM)
+
+    # Montagem de conexao: Socket
+    client = socket(AF_INET, SOCK_STREAM)
 
     # Conexao
-    conexao.settimeout(1)
-    conexao.connect((input("IP: "), int(input("Porta: "))))
+    client.connect(("127.0.0.1", 666))
+    client.settimeout(1)
 
     # Dados
-    conexao.send(b"Hacked\n")
-    print(conexao.recv(1024).decode())
+    client.send(b"Hacked\n")
+    pacotes_recebidos = client.recv(1024).decode()
+
+    # Mensagem decodificada
+    print(pacotes_recebidos)
 
 except Exception as e:
-    print("Conexao interrompida !")
-
-except KeyboardInterrupt:
-    pass
+    print(f"Conexao encerrada: {e}")
