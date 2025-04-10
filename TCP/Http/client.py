@@ -1,52 +1,23 @@
-# Biblioteca
+"""
+Cliente: TCP
+"""
+
 from socket import socket, AF_INET, SOCK_STREAM
 
+try:
 
-def montagem_conexao():
+    # Montagem de conexao: Criando Socket
+    client = socket(AF_INET, SOCK_STREAM)
 
-    try:
-        return socket(AF_INET, SOCK_STREAM)
+    # Conexao
+    client.connect(("www.google.com.br", 80))
+    client.settimeout(1)
 
-    except Exception as e:
-        print(f"Montagem de conexao falhou!: {e}")
-        return None
+    # Envio de requisicao
+    client.send(b"GET / HTTP/1.1\nHost: www.google.com\n\n")
+    pacotes_recebidos = client.recv(1024).decode()
 
+    print(pacotes_recebidos)
 
-def conexao():
-
-    try:
-        client = montagem_conexao()
-        client.settimeout(1)
-
-        # Envio de pacotes + recebimentos
-        client.connect(("google.com", 80))
-        client.send(b"GET / HTTP/1.1 \nHost: www.google.com\n\n")
-
-        return client
-
-    except Exception as e:
-        print(f"Falha na conexao: {e}")
-        return None
-
-
-def resposta():
-
-    try:
-        pacotes = conexao()
-
-        recebidos = pacotes.recv(1024).decode()
-        return recebidos
-
-    except Exception as e:
-        print(f"Pacotes recebidos {e}")
-        return None
-
-
-def main():
-    print(resposta())
-
-
-# Execucao
-if __name__ == '__main__':
-    main()
-
+except Exception as e:
+    print(f"Erro de conexao: {e}")
