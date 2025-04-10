@@ -2,13 +2,11 @@
 from socket import socket, AF_INET, SOCK_STREAM
 
 try:
-
     # Montagem de conexao: Socket
     client = socket(AF_INET, SOCK_STREAM)
 
     # Conexao
     client.connect(("127.0.0.1", 666))
-    client.settimeout(1)
 
     # Dados
     client.send(b"Hacked\n")

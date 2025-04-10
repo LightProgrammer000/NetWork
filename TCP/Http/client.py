@@ -2,6 +2,7 @@
 Cliente: TCP
 """
 
+# Bibliotecas
 from socket import socket, AF_INET, SOCK_STREAM
 
 try:
@@ -13,7 +14,7 @@ try:
     client.connect(("www.google.com.br", 80))
     client.settimeout(1)
 
-    # Envio de requisicao
+    # Envio de requisicao e recebimento
     client.send(b"GET / HTTP/1.1\nHost: www.google.com\n\n")
     pacotes_recebidos = client.recv(1024).decode()
 
