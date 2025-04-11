@@ -46,7 +46,7 @@ try:
                     client_socket.send(file_data)
                     file_data = file.read(1024)
 
-            print("Cliente tem acesso ao servidor e a  publica")
+            print("Cliente tem acesso ao servidor e a chave publica")
             break
 
         else:
