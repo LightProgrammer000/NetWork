@@ -1,24 +1,24 @@
 """
-Cliente: Requisicao HTTP por meio TCP
+Cliente: Requisicao HTTP
 """
 
 # Bibliotecas
 from socket import socket, AF_INET, SOCK_STREAM
 
 try:
-    # Montagem de conexao
+    # Montagem
     client = socket(AF_INET, SOCK_STREAM)
 
     # Conexao
     client.connect(("google.com", 80))
     client.settimeout(1)
 
-    # Envio + Resposta
+    # Envio + Recebimento
     client.send(b"GET / HTTP/1.1\nHost:www.google.com\n\n")
-    pacotes = client.recv(1024).decode()
+    pacote = client.recv(1024).decode()
 
     # Mensagem
-    print(pacotes)
+    print(pacote)
 
 except Exception as e:
-    print(f"Erro na conexao: {e}")
+    print(f"Erro de conexao: {e}")

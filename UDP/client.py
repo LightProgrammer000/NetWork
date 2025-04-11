@@ -1,20 +1,35 @@
 """
-Conexao UDP + Netcat (nc -luvp 666)
+Programa: Client UDP
 """
 
 # Biblioteca
 from socket import socket, AF_INET, SOCK_DGRAM
 
 try:
-    # Montagem de conexao
+    # Montagem
     client = socket(AF_INET, SOCK_DGRAM)
 
     while True:
 
-        client.sendto((input("Mensagem: ") + "\n").encode(), ("127.0.0.1", 666))
-        recebido, address = client.recvfrom(1024)
+        # Envio de mensagem
+        msg = input("Mensagem: ")
 
-        print(f"{address[0]}: {recebido.decode()}")
+        if msg == "sair":
+            break
+
+        else:
+            envio = client.sendto(f"{msg}\n".encode(), ("127.0.0.1", 666))
+
+            # Reposta
+            pacote, address = client.recvfrom(1024)
+
+            if pacote.decode() == "sair\n":
+                break
+
+            print(f"{address[0]}: {pacote.decode()}")
+
+except KeyboardInterrupt:
+    pass
 
 except Exception as e:
     print(f"Erro de conexao: {e}")

@@ -1,37 +1,41 @@
 """
-Chat: Python + Netcat (nc -lvp 666)
+Programa: Chat
+Ferramenta: Script python + Netcat (nc -lvp 666)
 """
 
 # Bibliotecas
 from socket import socket, AF_INET, SOCK_STREAM
 
 try:
-
-    # Montagem de conexao
+    # Montagem
     client = socket(AF_INET, SOCK_STREAM)
 
     # Conexao
-    client.connect(("127.0.0.1", 666))
+    ip = "127.0.0.1"
+    porta = 666
+    client.connect((ip, porta))
 
     while True:
 
-        # Envio + Recebimentos
-        msg = input("Mensagem: ") + "\n"
+        # Envio + Recebimento
+        msg = input("Cliente: ") + "\n"
 
-        if msg == "sair\n":
+        if msg == "sair":
             break
-        else:
-            mensagem = client.send(msg.encode())
 
-        recebido = client.recv(1024).decode()
-        if recebido == "sair\n":
+        client.send(msg.encode())
+        pacote = client.recv(1024).decode()
+
+        if pacote == "sair\n":
             break
-        else:
-            print(f"Servidor: {recebido}")
+
+        print(f"Servidor ({ip}): {pacote}")
 
 except KeyboardInterrupt:
     pass
 
 except Exception as e:
-    print(f"Conexao encerrada ! {e}")
+    print(f"Erro de conexao: {e}")
 
+finally:
+    client.close()

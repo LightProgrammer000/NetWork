@@ -1,26 +1,37 @@
 """
 Client: SSH
+Server: bandit.labs.overthewire.org
+Porta: 2220
 """
 
+# Biblioteca
 from paramiko import SSHClient, AutoAddPolicy
 
-host = ""
-user = ""
-passwd = ""
+try:
+    # Configuracoes
+    host = "bandit.labs.overthewire.org"
+    port = 2220
+    username = "bandit0"
+    password = "bandit0"
 
-# Montagem de conexao
-client = SSHClient()
-client.set_missing_host_key_policy(AutoAddPolicy())
-client.connect(host, username=user, password=passwd)
+    # Montagem
+    client = SSHClient()
+    client.set_missing_host_key_policy(AutoAddPolicy())
 
-while True:
+    # Conexao
+    client.connect(hostname=host, port=2220, username=username, password=password)
 
-    try:
+    # Loop: Comandos infinitos
+    while True:
+
+        # Resposta
         stdin, stdout, stderr = client.exec_command(input("Comando: "))
-        print(stdout.read().decode())
+
+        if stdout:
+            print(stdout.read().decode())
 
         if stderr:
             print(stderr.read().decode())
 
-    except Exception as e:
-        print(e)
+except Exception as e:
+    print(f"Erro na conexao SSH: {e}")
