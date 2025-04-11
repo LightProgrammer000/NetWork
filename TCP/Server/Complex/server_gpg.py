@@ -15,7 +15,7 @@ try:
     server.setsockopt(SOL_SOCKET, SO_REUSEADDR, 1)
 
     # Conexao
-    server.bind(("127.0.0.1", 666))
+    server.bind(("0.0.0.1", 666))
     server.listen(5)
     print("Servidor escutando ...")
 
