@@ -38,16 +38,17 @@ try:
             # Arquivo a ser enviado ao cliente
             with open("File/gpg_public_key.txt", "rb") as file:
 
-                file_data = file.read(1024)
-
-                # Caso: Existindo dados a serem lidos
-                while file_data:
-
-                    client_socket.send(file_data)
+                while True:
                     file_data = file.read(1024)
 
-            print("Cliente tem acesso ao servidor e a chave publica")
-            break
+                    if not file_data:
+                        break
+
+                    else:
+                        client_socket.send(file_data)
+
+                print("Cliente tem acesso ao servidor e a chave publica")
+                break
 
         else:
             cont += 1
